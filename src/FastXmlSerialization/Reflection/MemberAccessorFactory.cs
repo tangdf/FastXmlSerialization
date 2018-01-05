@@ -10,7 +10,8 @@ namespace FastXmlSerialization
 {
     public static class MemberAccessorFactory
     {
-        private static ConcurrentDictionary<PropertyInfo,IMemberAccessor> s_cache=new ConcurrentDictionary<PropertyInfo, IMemberAccessor>();
+        private static ConcurrentDictionary<PropertyInfo, IMemberAccessor> s_cache = new ConcurrentDictionary<PropertyInfo, IMemberAccessor>();
+
         public static IMemberAccessor Create(PropertyInfo propertyInfo)
         {
             if (propertyInfo == null)
@@ -20,7 +21,8 @@ namespace FastXmlSerialization
 
         private static IMemberAccessor _Create(PropertyInfo propertyInfo)
         {
-            return (IMemberAccessor) typeof(PropertyAccessor<,>).MakeGenericType(propertyInfo.DeclaringType, propertyInfo.PropertyType).New(propertyInfo);
+            return (IMemberAccessor) typeof(PropertyAccessor<,>).MakeGenericType(propertyInfo.DeclaringType, propertyInfo.PropertyType)
+                .New(propertyInfo);
         }
     }
 }

@@ -13,7 +13,9 @@ namespace FastXmlSerialization
         //private static ConcurrentDictionary<Type, InternalXmlSerializer> s_cache = new ConcurrentDictionary<Type, InternalXmlSerializer>();
 
         private readonly Dictionary<string, IPropertySerializer> _serializeMap = new Dictionary<string, IPropertySerializer>(StringComparer.Ordinal);
-        private readonly Dictionary<string, IPropertySerializer> _deserializeMap = new Dictionary<string, IPropertySerializer>(StringComparer.Ordinal);
+
+        private readonly Dictionary<string, IPropertySerializer> _deserializeMap = new Dictionary<string, IPropertySerializer>(StringComparer.Ordinal)
+            ;
 
         public ComplexSerializer(Type targetType)
         {
@@ -31,9 +33,8 @@ namespace FastXmlSerialization
 
             foreach (PropertyInfo propertyInfo in properties) {
                 if (propertyInfo.GetAttribute<FastXmlIgnoreAttribute>() == null) {
-
                     IPropertySerializer serializer = PropertySerializerFactory.Create(propertyInfo);
-                  
+
                     _serializeMap.Add(serializer.InputElementName, serializer);
                     _deserializeMap.Add(serializer.OutputElementName, serializer);
                 }
@@ -70,16 +71,12 @@ namespace FastXmlSerialization
             object result = null;
             xmlReader.MoveToContent();
             while (xmlReader.NodeType != XmlNodeType.EndElement && xmlReader.NodeType != XmlNodeType.None) {
-
                 IPropertySerializer propertySerializer;
-                if (string.IsNullOrEmpty(xmlReader.Name)==false && this._deserializeMap.TryGetValue(xmlReader.Name, out propertySerializer))
-                {
-                    if (result == null)
-                    {
+                if (string.IsNullOrEmpty(xmlReader.Name) == false && this._deserializeMap.TryGetValue(xmlReader.Name, out propertySerializer)) {
+                    if (result == null) {
                         result = this.TargetType.New();
                     }
-                    if (xmlReader.IsEmptyElement)
-                    {
+                    if (xmlReader.IsEmptyElement) {
                         propertySerializer.Read(xmlReader, result);
                         //xmlReader.Skip();
                         //xmlReader.MoveToContent();

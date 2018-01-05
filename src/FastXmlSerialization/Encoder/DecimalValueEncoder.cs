@@ -4,11 +4,11 @@ namespace FastXmlSerialization
 {
     internal class DecimalValueEncoder : BaseValueEncoder<decimal>
     {
-
         /// <summary>
         /// 是否为明细金额
         /// </summary>
         private readonly bool _isDetail;
+
         public DecimalValueEncoder(bool isDetail)
         {
             this._isDetail = isDetail;

@@ -20,16 +20,15 @@ namespace FastXmlSerialization
             //节点全是小写。
             get { return this.PropertyInfo.Name.ToLowerInvariant(); }
         }
+
         public virtual string OutputElementName
         {
             get { return this.InputElementName; }
         }
 
-   
 
         public abstract void Write(XmlWriter xmlWriter, object value);
 
         public abstract void Read(XmlReader xmlReader, object obj);
-
     }
 }

@@ -18,7 +18,6 @@ namespace FastXmlSerialization
         }
 
 
-
         private static IObjectSerializer _Create(Type targetType)
         {
             if (targetType.IsCollection()) {

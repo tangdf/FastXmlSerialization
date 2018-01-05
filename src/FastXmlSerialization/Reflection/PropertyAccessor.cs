@@ -9,6 +9,7 @@ namespace FastXmlSerialization
 
         private readonly Func<TDeclaring, TValue> _getter;
         private readonly Action<TDeclaring, TValue> _setter;
+
         public PropertyAccessor(PropertyInfo propertyInfo)
         {
             if (propertyInfo == null)
@@ -31,24 +32,24 @@ namespace FastXmlSerialization
             return this.GetValue((TDeclaring) obj);
         }
 
-          void IMemberAccessor<TValue>.SetValue(object obj, TValue value)
+        void IMemberAccessor<TValue>.SetValue(object obj, TValue value)
         {
-              this.SetValue((TDeclaring)obj, value);
+            this.SetValue((TDeclaring) obj, value);
         }
 
 
-         TValue IMemberAccessor<TValue>.GetValue(object obj)
-         {
-             return this.GetValue((TDeclaring) obj);
-         }
+        TValue IMemberAccessor<TValue>.GetValue(object obj)
+        {
+            return this.GetValue((TDeclaring) obj);
+        }
 
         void IMemberAccessor.SetValue(object obj, object value)
         {
             //this._propertyInfo.SetValue(obj, value);
-            this.SetValue((TDeclaring)obj, (TValue)value);
+            this.SetValue((TDeclaring) obj, (TValue) value);
         }
 
-      
+
         public TValue GetValue(TDeclaring obj)
         {
             return this._getter.Invoke(obj);

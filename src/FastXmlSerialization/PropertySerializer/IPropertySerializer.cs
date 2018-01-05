@@ -2,7 +2,7 @@
 
 namespace FastXmlSerialization
 {
-    public interface IPropertySerializer 
+    public interface IPropertySerializer
     {
         string InputElementName { get; }
 

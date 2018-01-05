@@ -37,7 +37,7 @@ namespace FastXmlSerialization
 
         private static IObjectSerializer CreateObjectSerializer(Type targetType)
         {
-            IObjectSerializer objectSerializer= ObjectSerializerFactory.Create(targetType);
+            IObjectSerializer objectSerializer = ObjectSerializerFactory.Create(targetType);
             if (objectSerializer is CollectionSerializer collectionSerializer) {
                 return new CollectionObjectSerializer(collectionSerializer);
             }
@@ -46,7 +46,7 @@ namespace FastXmlSerialization
 
         public T Deserialize<T>(string xml)
         {
-            return (T)Deserialize(xml, typeof(T));
+            return (T) Deserialize(xml, typeof(T));
         }
 
         public object Deserialize(string xml, Type targetType)
@@ -59,32 +59,26 @@ namespace FastXmlSerialization
             using (StringReader stringReader = new StringReader(xml))
 
             using (XmlReader xmlReader = XmlReader.Create(stringReader)) {
-                if (xmlReader.MoveToContent() == XmlNodeType.Element)
-                {
-                    while (xmlReader.NodeType != XmlNodeType.EndElement && xmlReader.NodeType != XmlNodeType.None)
-                    {
+                if (xmlReader.MoveToContent() == XmlNodeType.Element) {
+                    while (xmlReader.NodeType != XmlNodeType.EndElement && xmlReader.NodeType != XmlNodeType.None) {
                         if (xmlReader.IsStartElement("output")) {
-                            if (xmlReader.IsEmptyElement)
-                            {
+                            if (xmlReader.IsEmptyElement) {
                                 xmlReader.Skip();
                                 xmlReader.MoveToContent();
                                 continue;
                             }
                             xmlReader.ReadStartElement();
                             xmlReader.MoveToContent();
-                          return  Deserialize(xmlReader, targetType);
+                            return Deserialize(xmlReader, targetType);
                         }
                         throw new XmlSerializeException("错误的xml格式文档，文档不是以“output”为根节点。");
                     }
-                  
                 }
-
-
             }
             return null;
         }
 
-        private object Deserialize(XmlReader xmlReader,Type targetType)
+        private object Deserialize(XmlReader xmlReader, Type targetType)
         {
             IObjectSerializer serializer = CreateObjectSerializer(targetType);
             //serializer.Write(xmlWriter, obj);

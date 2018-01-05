@@ -5,32 +5,28 @@ namespace FastXmlSerialization
 {
     internal class PrimitiveSerializer<TValue> : IObjectSerializer
     {
-        private  IValueEncoder<TValue> _valueEncoder;
+        private IValueEncoder<TValue> _valueEncoder;
 
         public PrimitiveSerializer()
         {
-            
         }
 
         public virtual IValueEncoder<TValue> ValueEncoder
         {
-            get
-            {
-                if (this._valueEncoder == null)
-                {
+            get {
+                if (this._valueEncoder == null) {
                     this._valueEncoder = this.CreateValueEncoder();
-
                 }
-               return this._valueEncoder;
+                return this._valueEncoder;
             }
         }
 
 
         protected virtual IValueEncoder<TValue> CreateValueEncoder()
         {
-           return  ValueEncoderFactory.Create<TValue>();
+            return ValueEncoderFactory.Create<TValue>();
         }
-   
+
 
         public void Write(XmlWriter xmlWriter, TValue value)
         {
@@ -56,7 +52,7 @@ namespace FastXmlSerialization
             if (xmlReader == null)
                 throw new ArgumentNullException(nameof(xmlReader));
 
-            var value = xmlReader.NodeType==XmlNodeType.Text  ? xmlReader.ReadContentAsString(): xmlReader.ReadElementContentAsString();
+            var value = xmlReader.NodeType == XmlNodeType.Text ? xmlReader.ReadContentAsString() : xmlReader.ReadElementContentAsString();
             if (this.ValueEncoder.Nullable == false && string.IsNullOrEmpty(value))
                 throw new XmlSerializeException(string.Format("“{0}”类型不能为空值。", typeof(TValue)));
             return this.ValueEncoder.Decode(value);
@@ -71,26 +67,25 @@ namespace FastXmlSerialization
 
     internal abstract class DecimalSerializer<TValue> : PrimitiveSerializer<TValue>
     {
-
         /// <summary>
         /// 是否为明细金额
         /// </summary>
-
         public DecimalSerializer(bool isDetail)
         {
             this.IsDetail = isDetail;
         }
-        protected  bool IsDetail { get; }
+
+        protected bool IsDetail { get; }
 
         protected override IValueEncoder<TValue> CreateValueEncoder()
         {
-            if(typeof(TValue)==typeof(decimal))
-                return (IValueEncoder<TValue>)new DecimalValueEncoder(this.IsDetail);
+            if (typeof(TValue) == typeof(decimal))
+                return (IValueEncoder<TValue>) new DecimalValueEncoder(this.IsDetail);
 
-             if(typeof(TValue)==typeof(decimal?))
-                return (IValueEncoder<TValue>)new NullableValueEncoder<decimal>(new DecimalValueEncoder(this.IsDetail));
+            if (typeof(TValue) == typeof(decimal?))
+                return (IValueEncoder<TValue>) new NullableValueEncoder<decimal>(new DecimalValueEncoder(this.IsDetail));
 
-            throw new InvalidOperationException(string.Format("不支持数据类型“{0}”。",typeof(TValue)));
+            throw new InvalidOperationException(string.Format("不支持数据类型“{0}”。", typeof(TValue)));
         }
     }
 }

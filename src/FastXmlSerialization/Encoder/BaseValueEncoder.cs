@@ -2,7 +2,10 @@
 {
     public abstract class BaseValueEncoder<TValue> : IValueEncoder<TValue>, IValueEncoder
     {
-        public virtual bool Nullable { get { return true; } }
+        public virtual bool Nullable
+        {
+            get { return true; }
+        }
 
         public abstract TValue Decode(string value);
 

@@ -6,11 +6,8 @@ namespace FastXmlSerialization
 {
     internal class ComplexPropertySerializer : BasePropertySerializer
     {
-
-
         public ComplexPropertySerializer(PropertyInfo propertyInfo) : base(propertyInfo)
         {
-
             this.MemberAccessor = MemberAccessorFactory.Create(this.PropertyInfo);
 
             this.ObjectSerializer = ObjectSerializerFactory.Create(this.PropertyInfo.PropertyType);
@@ -34,12 +31,10 @@ namespace FastXmlSerialization
             object value = MemberAccessor.GetValue(obj);
 
             if (value != null) {
-
                 this.ObjectSerializer.Write(xmlWriter, value);
             }
 
             xmlWriter.WriteEndElement();
-       
         }
 
         public override void Read(XmlReader xmlReader, object obj)

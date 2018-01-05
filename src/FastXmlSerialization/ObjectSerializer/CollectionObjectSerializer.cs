@@ -9,8 +9,6 @@ namespace FastXmlSerialization
 {
     internal class CollectionObjectSerializer : IObjectSerializer
     {
-
-
         private readonly CollectionSerializer _collectionSerializer;
 
         public CollectionObjectSerializer(CollectionSerializer collectionSerializer)
@@ -41,17 +39,16 @@ namespace FastXmlSerialization
 
             while (xmlReader.NodeType != XmlNodeType.EndElement && xmlReader.NodeType != XmlNodeType.None) {
                 if (xmlReader.IsStartElement("sqldata")) {
-
                     if (xmlReader.IsEmptyElement) {
                         xmlReader.Skip();
                         xmlReader.MoveToContent();
                         continue;
-
                     }
                     xmlReader.ReadStartElement();
                     xmlReader.MoveToContent();
 
-                    return _collectionSerializer.Read(xmlReader);}
+                    return _collectionSerializer.Read(xmlReader);
+                }
 
                 else {
                     throw new XmlSerializeException("错误的xml格式文档,集合必须以“sqldata”不根节点。");
@@ -59,7 +56,5 @@ namespace FastXmlSerialization
             }
             return null;
         }
-
     }
 }
- 

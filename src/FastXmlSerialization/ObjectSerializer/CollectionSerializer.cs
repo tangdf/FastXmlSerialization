@@ -7,7 +7,6 @@ namespace FastXmlSerialization
 {
     internal class CollectionSerializer : IObjectSerializer
     {
-       
         public Type TargetType { get; }
 
 
@@ -37,26 +36,23 @@ namespace FastXmlSerialization
         }
 
 
-
         public virtual void Write(XmlWriter xmlWriter, ICollection value)
         {
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
 
             if (value.Count > 0) {
-
-             
-
                 foreach (var item in value) {
                     if (item != null) {
                         xmlWriter.WriteStartElement("row");
 
-                       
+
                         ElementObjectSerializer.Write(xmlWriter, item);
 
                         xmlWriter.WriteEndElement();
                     }
-                }}
+                }
+            }
         }
 
 
@@ -66,11 +62,6 @@ namespace FastXmlSerialization
                 throw new ArgumentNullException(nameof(xmlReader));
             ICollectionWrapper result = null;
             if (xmlReader.MoveToContent() == XmlNodeType.Element) {
-              
-                 
-
-
-
                 while (xmlReader.NodeType != XmlNodeType.EndElement && xmlReader.NodeType != XmlNodeType.None) {
                     if (xmlReader.IsStartElement("row")) {
                         if (result == null) {
@@ -89,16 +80,13 @@ namespace FastXmlSerialization
                         result.Add(item);
 
                         xmlReader.ReadEndElement();
-                      
+
                         xmlReader.MoveToContent();
                     }
                     else {
-
                         throw new XmlSerializeException("错误的xml格式文档,集合的元素必须以“row”不根节点。");
                     }
-
                 }
-
             }
             return result == null ? null : result.Result;
         }
@@ -106,17 +94,14 @@ namespace FastXmlSerialization
 
         private ICollectionWrapper CreateCollectionWrapper()
         {
-          return   (ICollectionWrapper)typeof(CollectionWrapper<>).MakeGenericType(this.ElementType).New(this.TargetType.IsArray);
+            return (ICollectionWrapper) typeof(CollectionWrapper<>).MakeGenericType(this.ElementType).New(this.TargetType.IsArray);
         }
 
 
         object IObjectSerializer.Read(XmlReader xmlReader)
         {
             return this.Read(xmlReader);
-
         }
-
-      
     }
 
 
@@ -145,7 +130,7 @@ namespace FastXmlSerialization
 
         public ICollection Result
         {
-            get { return this.IsArray ?   (ICollection)this._result.ToArray() : this._result; }
+            get { return this.IsArray ? (ICollection) this._result.ToArray() : this._result; }
         }
     }
 }

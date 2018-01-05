@@ -9,7 +9,7 @@
 
         public override string Decode(string value)
         {
-            return string.IsNullOrEmpty(value)?null:value;
+            return string.IsNullOrEmpty(value) ? null : value;
         }
 
         public override string Encode(string value)

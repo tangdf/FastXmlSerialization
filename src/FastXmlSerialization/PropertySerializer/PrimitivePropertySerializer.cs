@@ -8,14 +8,11 @@ namespace FastXmlSerialization
     {
         public PrimitivePropertySerializer(PropertyInfo propertyInfo) : base(propertyInfo)
         {
-
-
             this.MemberAccessor = (IMemberAccessor<TValue>) MemberAccessorFactory.Create(this.PropertyInfo);
 
             this.ObjectSerializer =
                 CreateObjectSerializer(); //new PrimitiveSerializer<TValue>();//(PrimitiveSerializer<TValue>)PrimitiveSerializerFactory.Create(propertyInfo);
         }
-
 
 
         public IMemberAccessor<TValue> MemberAccessor { get; }
@@ -28,7 +25,6 @@ namespace FastXmlSerialization
             Type targetType = this.PropertyInfo.PropertyType;
 
             if (targetType == typeof(Decimal) || targetType == typeof(Decimal?)) {
-
                 AmountAttribute amountAttribute = this.PropertyInfo.GetAttribute<AmountAttribute>();
 
                 if (amountAttribute == null) {
@@ -55,7 +51,6 @@ namespace FastXmlSerialization
 
             xmlReader.MoveToContent();
             while (xmlReader.NodeType != XmlNodeType.EndElement && xmlReader.NodeType != XmlNodeType.None) {
-
                 xmlReader.MoveToContent();
 
                 TValue value = this.ObjectSerializer.Read(xmlReader);

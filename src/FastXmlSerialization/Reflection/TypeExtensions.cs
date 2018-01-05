@@ -31,7 +31,7 @@ namespace FastXmlSerialization
             if (array.Length > 1)
                 throw new InvalidOperationException(string.Format("成员的存在多个“{0}”标记。", typeof(TAttribute)));
 
-            return (TAttribute)array[0];
+            return (TAttribute) array[0];
         }
 
         public static bool IsComplexType(this Type targetType)

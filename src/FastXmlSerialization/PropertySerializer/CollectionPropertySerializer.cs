@@ -13,7 +13,6 @@ namespace FastXmlSerialization
 
             this.ObjectSerializer = ObjectSerializerFactory.Create(this.PropertyInfo.PropertyType);
         }
-    
 
 
         public IMemberAccessor MemberAccessor { get; }
@@ -69,8 +68,6 @@ namespace FastXmlSerialization
             object value = this.ObjectSerializer.Read(xmlReader);
 
             this.MemberAccessor.SetValue(obj, value);
-          
         }
     }
 }
- 
