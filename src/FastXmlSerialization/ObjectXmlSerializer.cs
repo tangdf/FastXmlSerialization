@@ -14,6 +14,7 @@ namespace FastXmlSerialization
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
             settings.Encoding = Encoding.UTF8;
+            settings.NewLineChars = System.Environment.NewLine;
 
             using (StringWriter stringWriter = new GBKStringWriter(stringBuilder))
 
