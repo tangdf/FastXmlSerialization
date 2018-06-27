@@ -325,6 +325,3 @@ namespace FastXmlSerialization.UnitTest
         }
     }
 }
-
-
-

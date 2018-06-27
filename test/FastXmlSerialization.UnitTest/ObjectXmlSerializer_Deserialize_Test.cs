@@ -360,7 +360,3 @@ namespace FastXmlSerialization.UnitTest
         }
     }
 }
-
-
-
-
